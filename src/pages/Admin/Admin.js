@@ -1,5 +1,5 @@
-import './App.scss';
-import { Header } from './Store.js';
+import './Admin.scss';
+import Header from '../Header';
 
 function Admin() {
   return (

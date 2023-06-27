@@ -8,37 +8,6 @@
   font-size: calc(10px + 2vmin);
   color: white;
 
-	&__header {
-		background-color: #282c34;
-		display: flex;
-		justify-content: center;
-		width: 80vw;
-		height: 6vh;
-		margin-top: 4vh;
-		margin-bottom: 50px;
-
-		&__tabs {
-			display: flex;
-			width: 30vw;
-			justify-content: space-between;
-			font-size: calc(10px + 2vmin);
-		}
-
-		&__tab {
-			margin-top: 10px;
-		}
-
-		.active {
-			color: gray;
-		}
-
-		&__title {
-			width: 30vw;
-			text-align: center;
-			font-size: calc(20px + 2vmin);
-		}
-	}
-
 	&__content {
 		height: 90vh;
 		display: flex;
@@ -64,14 +33,23 @@
 			align-items: center;
 			padding-bottom: 8px;
 
+			&__carted {
+				display: flex;
+				align-items: center;
+			}
+
 			&__form {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
 				height: 90%;
 
-				&__button {
-					background-color: #00df00;
+				input {
+					width: 60%;
+				}
+
+				&__button_remove {
+					background-color: #FF0011;
 					border: none;
 					border-radius: 3px;
 					padding: 3px;
@@ -82,5 +60,20 @@
 		&__cell {
 			width: 15vw;
 		}
+
+		&__footer {
+			display: flex;
+			justify-content: center;
+			width: 80vw;
+		}
 	}
+}
+
+.create-order {
+	padding: 10px;
+	padding-left: 30px;
+	padding-right: 30px;
+	background-color: #00df00;
+	border: none;
+	border-radius: 3px;
 }

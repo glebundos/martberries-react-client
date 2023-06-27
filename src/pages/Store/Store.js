@@ -1,11 +1,12 @@
-import './App.scss';
-import { useEffect, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import './Store.scss';
+import { useContext, useEffect, useState } from 'react';
+import Header from '../Header';
+import { CartContext } from '../../index.js';
 
 function Store() {
   const [products, setProducts] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const { cart, setCart } = useContext(CartContext);
 
   useEffect(() => {
     fetchData();
@@ -37,7 +38,7 @@ function Store() {
     if (product.amount < amount) {
       alert('У нас столько нету товара дохуя');
     } else {
-      setCart([...cart, { id, amount }]);
+      setCart([...cart, { product, amount }]);
       console.log(`Added ${id} - ${amount}`);
       console.log(cart);
     }
@@ -73,9 +74,9 @@ function Store() {
                 <input name={product.id}></input>
                 <button
                   type="submit"
-                  className="app__content__product__form__button"
+                  className="app__content__product__form__button_add"
                 >
-                  Sumbit
+                  Add to cart
                 </button>
               </form>
             </div>
@@ -85,63 +86,6 @@ function Store() {
         )}
       </div>
     </div>
-  );
-}
-
-export function Header({ tabTitle }) {
-  const tabs = [
-    {
-      title: 'Store',
-    },
-    {
-      title: 'Admin',
-    },
-    {
-      title: 'Accounting',
-    },
-    {
-      title: 'Storage',
-    },
-    {
-      title: 'Purchasing',
-    },
-    {
-      title: 'Delivery',
-    },
-  ];
-
-  return (
-    <header className="app__header">
-      <div className="app__header__tabs">
-        {tabs.slice(0, 3).map((tab) => (
-          <Link
-            to={'/' + tab.title.toLowerCase()}
-            key={tab.title}
-            className={`app__header__tab ${
-              tab.title === tabTitle ? 'active' : ''
-            }`}
-          >
-            {tab.title}
-          </Link>
-        ))}
-      </div>
-      <div className="app__header__title">
-        MartBerries <Outlet />
-      </div>
-      <div className="app__header__tabs">
-        {tabs.slice(3).map((tab) => (
-          <Link
-            to={'/' + tab.title.toLowerCase()}
-            key={tab.title}
-            className={`app__header__tab ${
-              tab.title === tabTitle ? 'active' : ''
-            }`}
-          >
-            {tab.title}
-          </Link>
-        ))}
-      </div>
-    </header>
   );
 }
 

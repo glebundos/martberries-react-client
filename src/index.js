@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.scss';
-import Store from './pages/Store';
-import Admin from './pages/Admin';
+import Store from './pages/Store/Store';
+import Admin from './pages/Admin/Admin';
+import Accounting from './pages/Accounting/Accounting';
+import Storage from './pages/Storage/Storage';
+import Purchasing from './pages/Purchasing/Purchasing';
 import reportWebVitals from './reportWebVitals';
+import Delivery from './pages/Delivery/Delivery';
+import Cart from './pages/Cart/Cart';
+import { createContext } from 'react';
+
+export const CartContext = createContext({
+  cart: [],
+  setCart: (cart) => {},
+});
 
 export default function App() {
+  const [cart, setCart] = useState([]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<Store />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="store" element={<Store />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <CartContext.Provider value={{ cart, setCart }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<Store />} />
+            <Route path="admin" element={<Admin />} />
+            <Route path="store" element={<Store />} />
+            <Route path="accounting" element={<Accounting />} />
+            <Route path="storage" element={<Storage />} />
+            <Route path="purchasing" element={<Purchasing />} />
+            <Route path="delivery" element={<Delivery />} />
+            <Route path="cart" element={<Cart />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </CartContext.Provider>
   );
 }
 
