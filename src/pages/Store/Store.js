@@ -71,7 +71,7 @@ function Store() {
                 onSubmit={handleSubmit}
                 className="app__content__product__form app__content__cell"
               >
-                <input name={product.id}></input>
+                <input type="number" name={product.id}></input>
                 <button
                   type="submit"
                   className="app__content__product__form__button_add"
