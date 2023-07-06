@@ -1,11 +1,14 @@
-import './Store.scss';
+import s from './Store.module.scss';
 import { useContext, useEffect, useState } from 'react';
 import Header from '../Header';
+import Popup from 'reactjs-popup';
 import { CartContext } from '../../index.js';
 
 function Store() {
   const [products, setProducts] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const [orderId, setOrderId] = useState(null);
+  const [order, setOrder] = useState(null);
   const { cart, setCart } = useContext(CartContext);
 
   useEffect(() => {
@@ -35,46 +38,63 @@ function Store() {
     }
 
     let product = products.find((p) => p.id === id);
-    if (product.amount < amount) {
-      alert('У нас столько нету товара дохуя');
-    } else {
-      setCart([...cart, { product, amount }]);
-      console.log(`Added ${id} - ${amount}`);
-      console.log(cart);
-    }
+    setCart([...cart, { product, amount }]);
+    console.log(`Added ${id} - ${amount}`);
+    console.log(cart);
+  };
+
+  const idUpdateHandler = (id) => {
+    setOrderId(id);
+  };
+
+  const searchOrderHandler = () => {
+    console.log(orderId);
+    fetchOrderById();
+  };
+
+  const fetchOrderById = async () => {
+    let res = await fetch(`https://localhost:7134/api/Order/${orderId}`);
+    let response = await res.json();
+    setOrder(response);
   };
 
   return (
-    <div className="app">
+    <div className={s.app}>
       <Header tabTitle={'Store'} />
-      <div className="app__content">
-        <div className="app__content__header">
-          <div className="app__content__cell">Name</div>
-          <div className="app__content__cell">Price</div>
-          <div className="app__content__cell">Stock</div>
-          <div className="app__content__cell">Order amount</div>
+      <div className={s.app__content}>
+        <div className={s.app__content__header}>
+          <div className={s.app__content__cell}>Name</div>
+          <div className={s.app__content__cell}>Price</div>
+          <div className={s.app__content__cell}>Stock</div>
+          <div className={s.app__content__cell}>Order amount</div>
         </div>
         {!isLoading ? (
           products.map((product) => (
-            <div key={product.id} className="app__content__product">
-              <div className="app__content__product_name app__content__cell">
+            <div key={product.id} className={s.app__content__product}>
+              <div
+                className={`${s.app__content__product_name} ${s.app__content__cell}`}
+              >
                 {product.name}
               </div>
-              <div className="app__content__product_price app__content__cell">
+              <div
+                className={`${s.app__content__product_price} ${s.app__content__cell}`}
+              >
                 {product.price}$
               </div>
-              <div className="app__content__product_amount app__content__cell">
+              <div
+                className={`${s.app__content__product_amount} ${s.app__content__cell}`}
+              >
                 {product.amount}
               </div>
               <form
                 method="post"
                 onSubmit={handleSubmit}
-                className="app__content__product__form app__content__cell"
+                className={`${s.app__content__product__form} ${s.app__content__cell}`}
               >
                 <input type="number" name={product.id}></input>
                 <button
                   type="submit"
-                  className="app__content__product__form__button_add"
+                  className={s.app__content__product__form__button_add}
                 >
                   Add to cart
                 </button>
@@ -84,6 +104,56 @@ function Store() {
         ) : (
           <div>Loading...</div>
         )}
+        <div className={`${s.app__content__footer} ${s.app__content__cell}`}>
+          <Popup
+            trigger={<button className={s.create_order}>Tracking</button>}
+            modal
+            nested
+          >
+            {(close) => (
+              <div
+                className={s.modal}
+                style={{
+                  height: `${order === null ? '200px' : '500px'}`,
+                }}
+              >
+                <h2 className={s.modal__header}>Order info</h2>
+                <input
+                  className={s.modal__input}
+                  name="id"
+                  defaultValue={orderId}
+                  placeholder="Order id"
+                  onChange={(event) => idUpdateHandler(event.target.value)}
+                ></input>
+
+                <div>
+                  <button
+                    className={`${s.create_order} ${s.submit}`}
+                    onClick={() => {
+                      searchOrderHandler();
+                    }}
+                  >
+                    Search order
+                  </button>
+                </div>
+                {order !== null ? (
+                  <div className={s.modal__order_info}>
+                    <div className={s.modal__order_info__name}>
+                      {order.customerName}
+                    </div>
+                    <div>{order.submittedDateTime.slice(0, 10)}</div>
+                    <div>{order.customerPhoneNumber}</div>
+                    <div>{order.customerAdditionalInfo}</div>
+                    <div>Sumbitted money: {order.submittedMoney}$</div>
+                    <div>Requested money: {order.requestedMoney}$</div>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            )}
+          </Popup>
+        </div>
       </div>
     </div>
   );

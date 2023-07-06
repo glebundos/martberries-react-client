@@ -1,4 +1,4 @@
-import './Accounting.scss';
+//import './Accounting.scss';
 import Header from '../Header';
 
 function Accounting() {

@@ -1,4 +1,4 @@
-import './Delivery.scss';
+// import './Delivery.scss';
 import Header from '../Header';
 
 function Delivery() {

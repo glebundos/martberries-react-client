@@ -1,4 +1,4 @@
-import './Storage.scss';
+// import './Storage.scss';
 import Header from '../Header';
 
 function Storage() {

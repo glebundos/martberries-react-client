@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
+import s from './Header.module.scss';
 
 export default function Header({ tabTitle }) {
   const tabs = [
@@ -26,30 +27,30 @@ export default function Header({ tabTitle }) {
   ];
 
   return (
-    <header className="app__header">
-      <div className="app__header__tabs">
+    <header className={s.app__header}>
+      <div className={s.app__header__tabs}>
         {tabs.slice(0, 4).map((tab) => (
           <Link
             to={'/' + tab.title.toLowerCase()}
             key={tab.title}
-            className={`app__header__tab ${
-              tab.title === tabTitle ? 'active' : ''
+            className={`${s.app__header__tab} ${
+              tab.title === tabTitle ? s.active : ''
             }`}
           >
             {tab.title}
           </Link>
         ))}
       </div>
-      <div className="app__header__title">
+      <div className={s.app__header__title}>
         MartBerries <Outlet />
       </div>
-      <div className="app__header__tabs">
+      <div className={s.app__header__tabs}>
         {tabs.slice(4).map((tab) => (
           <Link
             to={'/' + tab.title.toLowerCase()}
             key={tab.title}
-            className={`app__header__tab ${
-              tab.title === tabTitle ? 'active' : ''
+            className={`${s.app__header__tab} ${
+              tab.title === tabTitle ? s.active : ''
             }`}
           >
             {tab.title}

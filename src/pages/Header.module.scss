@@ -43,8 +43,8 @@
 		height: 90vh;
 		display: flex;
 		flex-direction: column;
-		margin-right: 20vw;
 		width: 60vw;
+		margin-right: 20vw;
 		font-size: calc(8px + 2vmin);
 
 		&__header {
@@ -96,7 +96,7 @@
 		}
 
 		&__cell {
-			width: 15vw;
+			width: 20vw;
 		}
 
 		&__footer {
@@ -105,13 +105,4 @@
 			width: 80vw;
 		}
 	}
-}
-
-.create-order {
-	padding: 10px;
-	padding-left: 30px;
-	padding-right: 30px;
-	background-color: #00df00;
-	border: none;
-	border-radius: 3px;
 }

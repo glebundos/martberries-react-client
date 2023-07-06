@@ -1,6 +1,6 @@
+import s from './Cart.module.scss';
 import { useContext, useState } from 'react';
 import Popup from 'reactjs-popup';
-import './Cart.scss';
 import Header from '../Header';
 import { CartContext } from '../../index.js';
 
@@ -67,28 +67,36 @@ function Cart() {
   };
 
   return (
-    <div className="app">
+    <div className={s.app}>
       <Header tabTitle={'Cart'} />
-      <div className="app__content">
-        <div className="app__content__header">
-          <div className="app__content__cell">Name</div>
-          <div className="app__content__cell">Price</div>
-          <div className="app__content__cell">Stock</div>
-          <div className="app__content__cell">Ordered</div>
+      <div className={s.app__content}>
+        <div className={s.app__content__header}>
+          <div className={s.app__content__cell}>Name</div>
+          <div className={s.app__content__cell}>Price</div>
+          <div className={s.app__content__cell}>Stock</div>
+          <div className={s.app__content__cell}>Ordered</div>
         </div>
         {cart.map((pr, index) => (
-          <div key={pr.product.id + index} className="app__content__product">
-            <div className="app__content__product_name app__content__cell">
+          <div key={pr.product.id + index} className={s.app__content__product}>
+            <div
+              className={`${s.app__content__product_name} ${s.app__content__cell}`}
+            >
               {pr.product.name}
             </div>
-            <div className="app__content__product_price app__content__cell">
+            <div
+              className={`${s.app__content__product_price} ${s.app__content__cell}`}
+            >
               {pr.product.price}$
             </div>
-            <div className="app__content__product_amount app__content__cell">
+            <div
+              className={`${s.app__content__product_amount} ${s.app__content__cell}`}
+            >
               {pr.product.amount}
             </div>
 
-            <div className="app__content__product__form app__content__cell">
+            <div
+              className={`${s.app__content__product__form} ${s.app__content__cell}`}
+            >
               <input
                 type="number"
                 name={index}
@@ -98,7 +106,7 @@ function Cart() {
               ></input>
               <button
                 type="button"
-                className="app__content__product__form__button_remove"
+                className={s.app__content__product__form__button_remove}
                 onClick={() => handleRemove(pr.product.id)}
               >
                 Remove
@@ -106,17 +114,17 @@ function Cart() {
             </div>
           </div>
         ))}
-        <div className="app__content__footer app__content__cell">
+        <div className={`${s.app__content__footer} ${s.app__content__cell}`}>
           <Popup
-            trigger={<button className="create-order">Create order</button>}
+            trigger={<button className={s.create_order}>Create order</button>}
             modal
             nested
           >
             {(close) => (
-              <div className="modal">
-                <h2 className="modal__header">Personal data</h2>
+              <div className={s.modal}>
+                <h2 className={s.modal__header}>Personal data</h2>
                 <input
-                  className="modal__input"
+                  className={s.modal__input}
                   placeholder="Your Name"
                   name="name"
                   onChange={(event) =>
@@ -124,7 +132,7 @@ function Cart() {
                   }
                 ></input>
                 <input
-                  className="modal__input"
+                  className={s.modal__input}
                   placeholder="Your Phone"
                   name="phone"
                   onChange={(event) =>
@@ -132,7 +140,7 @@ function Cart() {
                   }
                 ></input>
                 <textarea
-                  className="modal__input additional"
+                  className={`${s.modal__input} ${s.additional}`}
                   type="additional"
                   placeholder="Additional Info"
                   name="info"
@@ -142,7 +150,7 @@ function Cart() {
                 ></textarea>
                 <div>
                   <button
-                    className="create-order submit"
+                    className={`${s.create_order} ${s.submit}`}
                     onClick={() => {
                       submitOrderHandler();
                       close();

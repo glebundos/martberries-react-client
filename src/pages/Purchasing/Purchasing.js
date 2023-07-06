@@ -1,4 +1,4 @@
-import './Purchasing.scss';
+// import './Purchasing.scss';
 import Header from '../Header';
 
 function Purchasing() {
