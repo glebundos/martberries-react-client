@@ -10,6 +10,10 @@ function Store() {
   const [orderId, setOrderId] = useState(null);
   const [order, setOrder] = useState(null);
   const { cart, setCart } = useContext(CartContext);
+  const [submittedMoney, setSubmittedMoney] = useState(
+    order ? order.submittedMoney : 0
+  );
+  const [submittedMoneyShow, setSubmittedMoneyShow] = useState(submittedMoney);
 
   useEffect(() => {
     fetchData();
@@ -56,6 +60,32 @@ function Store() {
     let res = await fetch(`https://localhost:7134/api/Order/${orderId}`);
     let response = await res.json();
     setOrder(response);
+    setSubmittedMoney(response.submittedMoney);
+    setSubmittedMoneyShow(response.submittedMoney);
+  };
+
+  const handleUpdate = (event) => {
+    let value = event.target.value;
+    setSubmittedMoney(value);
+  };
+
+  const handleSubmitMoney = async () => {
+    const response = await fetch(
+      'https://localhost:7134/api/order/submittedMoney',
+      {
+        method: 'PUT',
+        body: JSON.stringify({ id: orderId, submittedMoney }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    setSubmittedMoneyShow(
+      parseInt(submittedMoneyShow) + parseInt(submittedMoney)
+    );
+    console.log('SUB money :' + submittedMoney);
+    console.log('SHOW money :' + submittedMoneyShow);
   };
 
   return (
@@ -144,8 +174,23 @@ function Store() {
                     <div>{order.submittedDateTime.slice(0, 10)}</div>
                     <div>{order.customerPhoneNumber}</div>
                     <div>{order.customerAdditionalInfo}</div>
-                    <div>Sumbitted money: {order.submittedMoney}$</div>
+                    <div>Sumbitted money: {submittedMoneyShow}$</div>
                     <div>Requested money: {order.requestedMoney}$</div>
+                    <div className={s.modal__order__input}>
+                      <input
+                        type="number"
+                        name="submit"
+                        defaultValue={0}
+                        onChange={handleUpdate}
+                      ></input>
+                      <button
+                        type="button"
+                        className={s.modal__order__input__submit}
+                        onClick={() => handleSubmitMoney()}
+                      >
+                        Submit money
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <></>

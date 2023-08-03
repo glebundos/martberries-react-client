@@ -5,24 +5,31 @@ export default function Header({ tabTitle }) {
   const tabs = [
     {
       title: 'Store',
+      link: 'store',
     },
     {
       title: 'Admin',
+      link: 'admin',
     },
     {
       title: 'Accounting',
+      link: 'accounting/orders',
     },
     {
       title: 'Cart',
+      link: 'cart',
     },
     {
       title: 'Storage',
+      link: 'storage',
     },
     {
       title: 'Purchasing',
+      link: 'purchasing',
     },
     {
       title: 'Delivery',
+      link: 'delivery',
     },
   ];
 
@@ -41,9 +48,7 @@ export default function Header({ tabTitle }) {
           </Link>
         ))}
       </div>
-      <div className={s.app__header__title}>
-        MartBerries <Outlet />
-      </div>
+      <div className={s.app__header__title}>MartBerries</div>
       <div className={s.app__header__tabs}>
         {tabs.slice(4).map((tab) => (
           <Link
