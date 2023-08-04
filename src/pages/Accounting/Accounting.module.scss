@@ -104,6 +104,10 @@ h2 {
 .cell {
 	width: 20vw;
 	text-align: center;
+
+	&__transaction {
+		width: 25vw;
+	}
 }
 
 .order_info {
@@ -115,6 +119,10 @@ h2 {
 
 	&__header {
 		display: flex;
+
+		&__transaction {
+			margin-left: 50px;
+		}
 	}
 
 	&__details {
