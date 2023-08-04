@@ -78,7 +78,7 @@
 		&__navlinks {
 			display: flex;
 			justify-content: space-between;
-			width: 20vw;
+			width: 30vw;
 			margin-bottom: 40px;
 		}
 
@@ -87,6 +87,13 @@
 		}
 	}
 }
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
+
 
 .create-order {
 	padding: 10px;
