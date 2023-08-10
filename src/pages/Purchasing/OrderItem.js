@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import s from './Storage.module.scss';
+import s from './Purchasing.module.scss';
 
 function OrderItem({ id, date, name, statusId, products, storageProducts }) {
   const [isDetails, setIsDetails] = useState(false);
@@ -31,23 +31,6 @@ function OrderItem({ id, date, name, statusId, products, storageProducts }) {
       status = 'UNDEFINED';
       break;
   }
-
-  const handleConfirm = () => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 4,
-      }),
-    };
-
-    fetch('https://localhost:7134/api/order', requestOptions);
-
-    _setStatusId(4);
-  };
 
   const canBeOrdered = (id, amount) => {
     let productOnStorage = storageProducts.find((product) => product.id === id);
@@ -104,17 +87,6 @@ function OrderItem({ id, date, name, statusId, products, storageProducts }) {
             ))}
           </div>
           <div className={s.order_info__details__submittedMoney}></div>
-          <div className={s.order_info__details__inputs}>
-            <button
-              type="button"
-              className={`${s.app__content__product__form__button_add} ${
-                !isAllEnough ? s.disabled : ''
-              }`}
-              onClick={() => handleConfirm()}
-            >
-              Confirm order
-            </button>
-          </div>
         </div>
       ) : (
         <></>
