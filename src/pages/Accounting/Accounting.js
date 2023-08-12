@@ -12,10 +12,6 @@ function Accounting() {
     navigate('./orders');
   }, []);
 
-  const getExcel = async () => {
-    await fetch('https://localhost:7134/api/MoneyTransfer/report');
-  };
-
   return (
     <div className={s.app}>
       <Header tabTitle={'Accounting'} />

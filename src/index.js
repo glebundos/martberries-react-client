@@ -13,6 +13,8 @@ import Delivery from './pages/Delivery/Delivery';
 import Cart from './pages/Cart/Cart';
 import { createContext } from 'react';
 import AccountingTransactions from './pages/Accounting/AccountingTransactions';
+import PurchasingOrders from './pages/Purchasing/PurchasingOrders';
+import PurchasingTransactions from './pages/Purchasing/PurchasingTransactions';
 
 export const CartContext = createContext({
   cart: [],
@@ -35,7 +37,10 @@ export default function App() {
               <Route path="transactions" element={<AccountingTransactions />} />
             </Route>
             <Route path="storage" element={<Storage />} />
-            <Route path="purchasing" element={<Purchasing />} />
+            <Route path="purchasing/" element={<Purchasing />}>
+              <Route path="orders" element={<PurchasingOrders />} />
+              <Route path="transactions" element={<PurchasingTransactions />} />
+            </Route>
             <Route path="delivery" element={<Delivery />} />
             <Route path="cart" element={<Cart />} />
           </Route>
