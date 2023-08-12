@@ -173,7 +173,9 @@ function Store() {
                     </div>
                     <div>{order.submittedDateTime.slice(0, 10)}</div>
                     <div>{order.customerPhoneNumber}</div>
-                    <div>{order.customerAdditionalInfo}</div>
+                    <div className={s.add_info}>
+                      {order.customerAdditionalInfo}
+                    </div>
                     <div>Sumbitted money: {submittedMoneyShow}$</div>
                     <div>Requested money: {order.requestedMoney}$</div>
                     <div className={s.modal__order__input}>

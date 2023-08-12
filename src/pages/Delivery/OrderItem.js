@@ -1,6 +1,6 @@
 import { wait } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
-import s from './Admin.module.scss';
+import s from './Delivery.module.scss';
 
 function OrderItem({ id, date, name, phone, info, statusId, products }) {
   const [isDetails, setIsDetails] = useState(false);
@@ -33,7 +33,7 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
       break;
   }
 
-  const confirmOrder = () => {
+  const confirmDelivery = () => {
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -41,30 +41,13 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
       },
       body: JSON.stringify({
         id: id,
-        statusId: 1,
+        statusId: 5,
       }),
     };
 
     fetch('https://localhost:7134/api/order', requestOptions);
 
-    _setStatusId(1);
-  };
-
-  const getIsApproved = () => {
-    if (_statusId === 0) return false;
-    return true;
-  };
-
-  const rejectOrder = () => {
-    fetch(`https://localhost:7134/api/order`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: id }),
-    });
-
-    setIsDeleted(true);
+    _setStatusId(5);
   };
 
   return (
@@ -74,11 +57,7 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
       onMouseLeave={() => setIsDetails(false)}
       style={isDetails ? { height: '250px' } : { height: '50px' }}
     >
-      <div
-        className={`${s.order_info__header} ${
-          statusId === 5 ? s.delivered : ''
-        }`}
-      >
+      <div className={s.order_info__header}>
         <div className={`${s.cell} ${s.id}`}>{id}</div>
         <div className={s.cell}>{name}</div>
         <div className={s.cell}>{date.slice(0, 10)}</div>
@@ -100,22 +79,12 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
               </div>
             ))}
           </div>
-          <div className={s.order_info__details__buttons}>
-            <button
-              className={`${s.order_button} ${s.confirm} ${
-                getIsApproved() ? s.disabled : ''
-              }`}
-              onClick={() => confirmOrder()}
-            >
-              Confirm order
-            </button>
-            <button
-              className={`${s.order_button} ${s.reject}`}
-              onClick={() => rejectOrder()}
-            >
-              Reject order
-            </button>
-          </div>
+          <button
+            className={`${s.order_button} ${s.confirm}`}
+            onClick={() => confirmDelivery()}
+          >
+            Confirm delivery
+          </button>
           <div className={s.order_info__details__info}>{info}</div>
         </div>
       ) : (

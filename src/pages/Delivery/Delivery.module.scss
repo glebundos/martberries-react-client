@@ -8,43 +8,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 
-	&__header {
-		background-color: #282c34;
-		display: flex;
-		justify-content: center;
-		width: 80vw;
-		height: 6vh;
-		margin-top: 4vh;
-		margin-bottom: 50px;
-
-		&__tabs {
-			display: flex;
-			width: 30vw;
-			justify-content: space-between;
-			font-size: calc(9px + 2vmin);
-		}
-
-		&__tab {
-			margin-top: 10px;
-		}
-
-		.active {
-			color: gray;
-		}
-
-		&__title {
-			width: 30vw;
-			text-align: center;
-			font-size: calc(20px + 2vmin);
-		}
-	}
-
 	&__content {
 		height: 90vh;
 		display: flex;
 		flex-direction: column;
-		margin-right: 20vw;
-		width: 60vw;
+		width: 80vw;
 		font-size: calc(8px + 2vmin);
 
 		&__header {
@@ -55,6 +23,7 @@
 			align-items: center;
 			font-size: calc(10px + 2vmin);
 			margin-bottom: 20px;
+			text-align: center;
 		}
 		
 		&__product {
@@ -96,7 +65,7 @@
 		}
 
 		&__cell {
-			width: 15vw;
+			width: 20vw;
 		}
 
 		&__footer {
@@ -114,4 +83,99 @@
 	background-color: #00df00;
 	border: none;
 	border-radius: 3px;
+}
+
+h2 {
+	text-align: center;
+}
+
+.cell {
+	width: 20vw;
+	text-align: center;
+}
+
+.order_info {
+	display: flex;
+	flex-direction: column;
+	font-size: calc(6px + 1vmin);
+	height: 50px;
+	transition: 0.3s;
+
+	&__header {
+		display: flex;
+	}
+
+	&__details {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		color:bisque;
+		align-items: center;
+
+		&__products {
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			justify-content: center;
+		}
+
+		&__product {
+			display: flex;
+			flex-direction: row;
+			border-style: solid;
+			margin-top: 2px;
+		}
+
+		&__buttons {
+			display: flex;
+			justify-content: space-between;
+			width: 15vw;
+			margin-top: 10px;
+		}
+
+		&__info {
+			color: white;
+			margin-top: 20px;
+		}
+	}
+}
+
+.id {
+	width: 30vw;
+}
+
+.prop {
+	width: 10vw;
+}
+
+li {
+	list-style-type: none;
+	margin-top: 20px;
+}
+
+.order_button {
+	width: 120px;
+	height: 30px;
+	border-radius: 12px;
+	border: none;
+	margin-top: 10px;
+}
+
+.disabled {
+	background-color:#007700;
+	color: black;
+	opacity: 0.5;
+  pointer-events: none;
+}
+
+.confirm {
+	background-color: #00df00;
+}
+
+.reject {
+	background-color:#FF0011
+}
+
+.deleted {
+	display: none;
 }
