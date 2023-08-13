@@ -12,6 +12,14 @@ function Accounting() {
     navigate('./orders');
   }, []);
 
+  let requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token'),
+    },
+  };
+
   return (
     <div className={s.app}>
       <Header tabTitle={'Accounting'} />

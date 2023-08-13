@@ -12,7 +12,17 @@ function AccountingTransactions() {
 
   const fetchData = async () => {
     setLoading(true);
-    let res = await fetch('https://localhost:7134/api/moneytransfer');
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch(
+      'https://localhost:7134/api/moneytransfer',
+      requestOptions
+    );
     let response = await res.json();
     setTransactions(response);
     setLoading(false);

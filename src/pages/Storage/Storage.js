@@ -15,10 +15,17 @@ function Storage() {
 
   const fetchData = async () => {
     setLoading(true);
-    let res = await fetch('https://localhost:7134/api/Order/3');
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch('https://localhost:7134/api/Order/3', requestOptions);
     let response = await res.json();
     setOrders(response);
-    res = await fetch('https://localhost:7134/api/Product');
+    res = await fetch('https://localhost:7134/api/Product', requestOptions);
     response = await res.json();
     setStorageProducts(response);
     setLoading(false);

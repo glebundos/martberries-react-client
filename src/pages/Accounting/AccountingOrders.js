@@ -13,11 +13,21 @@ function AccountingOrders() {
 
   const fetchData = async () => {
     setLoading(true);
-    let res = await fetch('https://localhost:7134/api/Order/1');
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch('https://localhost:7134/api/Order/1', requestOptions);
     let response = await res.json();
     let ordersFetched = response;
 
-    let res2 = await fetch('https://localhost:7134/api/Order/2');
+    let res2 = await fetch(
+      'https://localhost:7134/api/Order/2',
+      requestOptions
+    );
     let response2 = await res2.json();
     ordersFetched = [...response, ...response2];
     setOrders(ordersFetched);

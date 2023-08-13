@@ -13,7 +13,14 @@ function Delivery() {
 
   const fetchData = async () => {
     setLoading(true);
-    let res = await fetch('https://localhost:7134/api/Order/4');
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch('https://localhost:7134/api/Order/4', requestOptions);
     let response = await res.json();
     setOrders(response);
     setLoading(false);

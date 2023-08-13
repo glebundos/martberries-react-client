@@ -58,11 +58,11 @@ function Cart() {
       body: JSON.stringify(order),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
       },
     });
 
     const result = await response.json();
-    console.log(result);
     setCart([]);
   };
 

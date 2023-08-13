@@ -21,7 +21,14 @@ function Store() {
 
   const fetchData = async () => {
     setLoading(true);
-    let res = await fetch('https://localhost:7134/api/product');
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch('https://localhost:7134/api/product', requestOptions);
     let response = await res.json();
     setProducts(response);
     setLoading(false);
@@ -43,8 +50,6 @@ function Store() {
 
     let product = products.find((p) => p.id === id);
     setCart([...cart, { product, amount }]);
-    console.log(`Added ${id} - ${amount}`);
-    console.log(cart);
   };
 
   const idUpdateHandler = (id) => {
@@ -52,12 +57,21 @@ function Store() {
   };
 
   const searchOrderHandler = () => {
-    console.log(orderId);
     fetchOrderById();
   };
 
   const fetchOrderById = async () => {
-    let res = await fetch(`https://localhost:7134/api/Order/${orderId}`);
+    let requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
+    let res = await fetch(
+      `https://localhost:7134/api/Order/${orderId}`,
+      requestOptions
+    );
     let response = await res.json();
     setOrder(response);
     setSubmittedMoney(response.submittedMoney);
@@ -70,22 +84,22 @@ function Store() {
   };
 
   const handleSubmitMoney = async () => {
+    let requestOptions = {
+      method: 'PUT',
+      body: JSON.stringify({ id: orderId, submittedMoney }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
+      },
+    };
     const response = await fetch(
       'https://localhost:7134/api/order/submittedMoney',
-      {
-        method: 'PUT',
-        body: JSON.stringify({ id: orderId, submittedMoney }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
+      requestOptions
     );
 
     setSubmittedMoneyShow(
       parseInt(submittedMoneyShow) + parseInt(submittedMoney)
     );
-    console.log('SUB money :' + submittedMoney);
-    console.log('SHOW money :' + submittedMoneyShow);
   };
 
   return (

@@ -11,6 +11,7 @@ import Purchasing from './pages/Purchasing/Purchasing';
 import reportWebVitals from './reportWebVitals';
 import Delivery from './pages/Delivery/Delivery';
 import Cart from './pages/Cart/Cart';
+import Auth from './pages/Auth/Auth';
 import { createContext } from 'react';
 import AccountingTransactions from './pages/Accounting/AccountingTransactions';
 import PurchasingOrders from './pages/Purchasing/PurchasingOrders';
@@ -43,6 +44,7 @@ export default function App() {
             </Route>
             <Route path="delivery" element={<Delivery />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="auth" element={<Auth />} />
           </Route>
         </Routes>
       </BrowserRouter>

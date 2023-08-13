@@ -56,6 +56,7 @@ function OrderItem({
         body: JSON.stringify({ id, requestedMoney: _requestedMoney }),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token'),
         },
       }
     );
@@ -64,6 +65,7 @@ function OrderItem({
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
       },
       body: JSON.stringify({
         id: id,
@@ -81,6 +83,7 @@ function OrderItem({
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
       },
       body: JSON.stringify({
         id: id,

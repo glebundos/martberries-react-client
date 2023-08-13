@@ -1,0 +1,56 @@
+.app{
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+
+	&__header {
+		background-color: #282c34;
+		display: flex;
+		justify-content: center;
+		width: 80vw;
+		height: 6vh;
+		margin-top: 4vh;
+		margin-bottom: 50px;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		width: 60vw;
+		align-items: center;
+	}
+}
+
+.input {
+	padding: 3px;
+	font-size: 16px;
+
+	&__password {
+		margin-top: 10px;
+	}
+}
+
+.button {
+	padding: 5px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border: none;
+	border-radius: 3px;
+	margin-top: 7px;
+	font-size: 16px;
+	width: 9vw;
+}
+
+.confirm {
+	background-color:#00df00;
+}
+
+.reject {
+	background-color:#FF0011
+}

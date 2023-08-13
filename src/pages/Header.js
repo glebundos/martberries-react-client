@@ -1,8 +1,16 @@
 import { Link, Outlet } from 'react-router-dom';
+import { useContext } from 'react';
 import s from './Header.module.scss';
+import { CartContext } from '../index.js';
 
 export default function Header({ tabTitle }) {
+  const { cart, setCart } = useContext(CartContext);
+
   const tabs = [
+    {
+      title: 'Cart',
+      link: 'cart',
+    },
     {
       title: 'Store',
       link: 'store',
@@ -14,10 +22,6 @@ export default function Header({ tabTitle }) {
     {
       title: 'Accounting',
       link: 'accounting/orders',
-    },
-    {
-      title: 'Cart',
-      link: 'cart',
     },
     {
       title: 'Storage',
@@ -36,7 +40,17 @@ export default function Header({ tabTitle }) {
   return (
     <header className={s.app__header}>
       <div className={s.app__header__tabs}>
-        {tabs.slice(0, 4).map((tab) => (
+        <Link
+          to={'/' + tabs[0].title.toLowerCase()}
+          key={tabs[0].title}
+          className={`
+					${s.app__header__tab}
+					 ${tabs[0].title === tabTitle ? s.active : ''} 
+					${cart.length < 1 ? s.invisible : ''}`}
+        >
+          {tabs[0].title}
+        </Link>
+        {tabs.slice(1, 4).map((tab) => (
           <Link
             to={'/' + tab.title.toLowerCase()}
             key={tab.title}

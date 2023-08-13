@@ -37,6 +37,7 @@ function OrderItem({ id, date, name, statusId, products, storageProducts }) {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token'),
       },
       body: JSON.stringify({
         id: id,
