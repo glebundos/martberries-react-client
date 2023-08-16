@@ -4,6 +4,7 @@ import Popup from 'reactjs-popup';
 import OrderItem from './OrderItem';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import api from '../../services/api';
 
 function PurchasingOrders() {
   const [orders, setOrders] = useState(null);
@@ -23,24 +24,14 @@ function PurchasingOrders() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/Order/3', requestOptions);
-    let response = await res.json();
-    setOrders(response);
+    let orders = (await api.get('/order/3')).data;
+    setOrders(orders);
 
-    res = await fetch('https://localhost:7134/api/Product', requestOptions);
-    response = await res.json();
-    setStorageProducts(response);
+    let products = (await api.get('/product')).data;
+    setStorageProducts(products);
 
-    res = await fetch('https://localhost:7134/api/Supplier', requestOptions);
-    response = await res.json();
-    setSuppliers(response);
+    let suppliers = (await api.get('/supplier')).data;
+    setSuppliers(suppliers);
     setLoading(false);
   };
 
@@ -76,17 +67,7 @@ function PurchasingOrders() {
   };
 
   const purchase = async (close) => {
-    const response = await fetch(
-      'https://localhost:7134/api/supplierproduct/buy',
-      {
-        method: 'POST',
-        body: JSON.stringify({ id: activeProduct.id, amount }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token'),
-        },
-      }
-    );
+    await api.post('/supplierproduct/buy', { id: activeProduct.id, amount });
 
     close();
   };

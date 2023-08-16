@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import Header from '../Header';
 import Popup from 'reactjs-popup';
 import { CartContext } from '../../index.js';
+import api from '../../services/api';
 
 function Store() {
   const [products, setProducts] = useState(null);
@@ -28,9 +29,9 @@ function Store() {
         Authorization: localStorage.getItem('token'),
       },
     };
-    let res = await fetch('https://localhost:7134/api/product', requestOptions);
-    let response = await res.json();
-    setProducts(response);
+    //let res = await fetch('https://localhost:7134/api/product', requestOptions);
+    let { data } = await api.get('/product');
+    setProducts(data);
     setLoading(false);
   };
 

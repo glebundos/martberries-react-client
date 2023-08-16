@@ -1,6 +1,7 @@
 import s from './Accounting.module.scss';
 import { useEffect, useState } from 'react';
 import TransactionItem from './TransactionItem';
+import api from '../../services/api';
 
 function AccountingTransactions() {
   const [isLoading, setLoading] = useState(true);
@@ -12,19 +13,8 @@ function AccountingTransactions() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch(
-      'https://localhost:7134/api/moneytransfer',
-      requestOptions
-    );
-    let response = await res.json();
-    setTransactions(response);
+    let { data } = await api.get('/moneytransfer');
+    setTransactions(data);
     setLoading(false);
   };
 

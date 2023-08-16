@@ -1,5 +1,6 @@
 import s from './Auth.module.scss';
 import { useState, useRef } from 'react';
+import api from '../../services/api';
 
 function Auth() {
   const [login, setLogin] = useState(null);
@@ -12,20 +13,13 @@ function Auth() {
   const refPassword = useRef(null);
 
   const onLogin = async () => {
-    let requestOptions = {
-      method: 'POST',
-      body: JSON.stringify({ username: login, password }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    let res = await fetch(
-      'https://localhost:7134/api/user/authenticate',
-      requestOptions
-    );
-    if (res.ok) {
-      let result = await res.json();
-      saveResult(result);
+    let { status, data } = await api.post('/user/authorize', {
+      username: login,
+      password,
+    });
+
+    if (status === 200) {
+      saveResult(data);
       refLogin.current.value = '';
       refPassword.current.value = '';
     } else {
@@ -40,24 +34,16 @@ function Auth() {
     setActiveUser(result.username);
   };
 
-  const getUsers = async () => {
-    let token = localStorage.getItem('token');
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token,
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/user', requestOptions);
-    let result = await res.json();
-    console.log(result);
+  const goToStore = async () => {
+    window.location.href = '/store';
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('roleId');
+    refLogin.current.value = '';
+    refPassword.current.value = '';
     setActiveUser(null);
   };
 
@@ -87,10 +73,10 @@ function Auth() {
           Sign in
         </button>
         <button
-          className={`${s.button} ${s.confirm}`}
-          onClick={() => getUsers()}
+          className={`${s.button} ${s.store}`}
+          onClick={() => goToStore()}
         >
-          Get users
+          Store
         </button>
         <button className={`${s.button} ${s.reject}`} onClick={() => logout()}>
           Logout

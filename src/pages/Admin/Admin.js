@@ -2,6 +2,7 @@ import s from './Admin.module.scss';
 import Header from '../Header';
 import { useEffect, useState } from 'react';
 import OrderItem from './OrderItem';
+import api from '../../services/api';
 
 function Admin() {
   const [orders, setOrders] = useState(null);
@@ -13,16 +14,8 @@ function Admin() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/Order', requestOptions);
-    let response = await res.json();
-    setOrders(response);
+    let { data } = await api.get('/order');
+    setOrders(data);
     setLoading(false);
   };
 

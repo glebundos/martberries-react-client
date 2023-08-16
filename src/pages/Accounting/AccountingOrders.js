@@ -2,6 +2,7 @@ import s from './Accounting.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import OrderItem from './OrderItem';
+import api from '../../services/api';
 
 function AccountingOrders() {
   const [orders, setOrders] = useState(null);
@@ -13,23 +14,10 @@ function AccountingOrders() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/Order/1', requestOptions);
-    let response = await res.json();
-    let ordersFetched = response;
-
-    let res2 = await fetch(
-      'https://localhost:7134/api/Order/2',
-      requestOptions
-    );
-    let response2 = await res2.json();
-    ordersFetched = [...response, ...response2];
+    let ordersFetched = [
+      ...(await api.get('/Order/1')).data,
+      ...(await api.get('/Order/2')).data,
+    ];
     setOrders(ordersFetched);
     setLoading(false);
   };

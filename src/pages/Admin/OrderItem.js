@@ -1,5 +1,6 @@
 import { wait } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
+import api from '../../services/api';
 import s from './Admin.module.scss';
 
 function OrderItem({ id, date, name, phone, info, statusId, products }) {
@@ -33,21 +34,8 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
       break;
   }
 
-  const confirmOrder = () => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 1,
-      }),
-    };
-
-    fetch('https://localhost:7134/api/order', requestOptions);
-
+  const confirmOrder = async () => {
+    await api.put('/order', { id, statusId: 1 });
     _setStatusId(1);
   };
 
@@ -56,16 +44,8 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
     return true;
   };
 
-  const rejectOrder = () => {
-    fetch(`https://localhost:7134/api/order`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ id: id }),
-    });
-
+  const rejectOrder = async () => {
+    await api.delete('/order', { data: { id } });
     setIsDeleted(true);
   };
 

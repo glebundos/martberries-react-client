@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
 import s from './Storage.module.scss';
 
 function OrderItem({ id, date, name, statusId, products, storageProducts }) {
@@ -32,21 +33,8 @@ function OrderItem({ id, date, name, statusId, products, storageProducts }) {
       break;
   }
 
-  const handleConfirm = () => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 4,
-      }),
-    };
-
-    fetch('https://localhost:7134/api/order', requestOptions);
-
+  const handleConfirm = async () => {
+    await api.put('/order', { id, statusId: 4 });
     _setStatusId(4);
   };
 

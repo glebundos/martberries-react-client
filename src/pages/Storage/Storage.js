@@ -3,6 +3,7 @@ import Header from '../Header';
 import { useEffect, useState } from 'react';
 import s from './Storage.module.scss';
 import OrderItem from './OrderItem';
+import api from '../../services/api';
 
 function Storage() {
   const [orders, setOrders] = useState(null);
@@ -15,19 +16,10 @@ function Storage() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/Order/3', requestOptions);
-    let response = await res.json();
-    setOrders(response);
-    res = await fetch('https://localhost:7134/api/Product', requestOptions);
-    response = await res.json();
-    setStorageProducts(response);
+    let { data } = await api.get('/order/3');
+    setOrders(data);
+    let storageProducts = (await api.get('/product')).data;
+    setStorageProducts(storageProducts);
     setLoading(false);
   };
 

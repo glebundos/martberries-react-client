@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import Popup from 'reactjs-popup';
 import Header from '../Header';
 import { CartContext } from '../../index.js';
+import api from '../../services/api';
 
 function Cart() {
   const { cart, setCart } = useContext(CartContext);
@@ -53,16 +54,16 @@ function Cart() {
       });
     }
 
-    const response = await fetch('https://localhost:7134/api/order', {
-      method: 'POST',
-      body: JSON.stringify(order),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    });
+    // const response = await fetch('https://localhost:7134/api/order', {
+    //   method: 'POST',
+    //   body: JSON.stringify(order),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: localStorage.getItem('token'),
+    //   },
+    // });
 
-    const result = await response.json();
+    await api.post('/order', order);
     setCart([]);
   };
 

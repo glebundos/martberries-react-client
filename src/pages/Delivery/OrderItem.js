@@ -1,5 +1,6 @@
 import { wait } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
+import api from '../../services/api';
 import s from './Delivery.module.scss';
 
 function OrderItem({ id, date, name, phone, info, statusId, products }) {
@@ -33,20 +34,8 @@ function OrderItem({ id, date, name, phone, info, statusId, products }) {
       break;
   }
 
-  const confirmDelivery = () => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 5,
-      }),
-    };
-
-    fetch('https://localhost:7134/api/order', requestOptions);
+  const confirmDelivery = async () => {
+    await api.put('/order', { id, statusId: 5 });
 
     _setStatusId(5);
   };

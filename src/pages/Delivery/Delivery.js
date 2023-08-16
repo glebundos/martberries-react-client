@@ -2,6 +2,7 @@ import s from './Delivery.module.scss';
 import Header from '../Header';
 import { useEffect, useState } from 'react';
 import OrderItem from './OrderItem';
+import api from '../../services/api';
 
 function Delivery() {
   const [orders, setOrders] = useState(null);
@@ -13,22 +14,14 @@ function Delivery() {
 
   const fetchData = async () => {
     setLoading(true);
-    let requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-    };
-    let res = await fetch('https://localhost:7134/api/Order/4', requestOptions);
-    let response = await res.json();
-    setOrders(response);
+    let { data } = await api.get('/order/4');
+    setOrders(data);
     setLoading(false);
   };
 
   return (
     <div className={s.app}>
-      <Header tabTitle={'Admin'} />
+      <Header tabTitle={'Delivery'} />
       <div className={s.app__content}>
         <h2>Orders</h2>
         <div className={s.app__content__header}>

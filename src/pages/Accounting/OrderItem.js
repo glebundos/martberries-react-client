@@ -1,5 +1,6 @@
 import { wait } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
+import api from '../../services/api';
 import s from './Accounting.module.scss';
 
 function OrderItem({
@@ -49,49 +50,20 @@ function OrderItem({
   };
 
   const handleRequest = async (e) => {
-    const response = await fetch(
-      'https://localhost:7134/api/order/requestedMoney',
-      {
-        method: 'PUT',
-        body: JSON.stringify({ id, requestedMoney: _requestedMoney }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token'),
-        },
-      }
-    );
+    await api.put('/order/requestedMoney', {
+      id,
+      requestedMoney: _requestedMoney,
+    });
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 2,
-      }),
-    };
-
+    await api.put('/order', { id, statusId: 2 });
     _setStatusId(2);
-
-    fetch('https://localhost:7134/api/order', requestOptions);
   };
 
-  const handleConfirm = () => {
-    const requestOptions = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-        id: id,
-        statusId: 3,
-      }),
-    };
-
-    fetch('https://localhost:7134/api/order', requestOptions);
+  const handleConfirm = async () => {
+    await api.put('/order', {
+      id,
+      statusId: 3,
+    });
 
     _setStatusId(3);
   };
